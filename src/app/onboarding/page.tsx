@@ -37,73 +37,104 @@ function OnboardingForm() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-violet-50 to-white flex items-center justify-center px-4">
-      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-2">Set up your profile</h1>
-        <p className="text-gray-500 text-center text-sm mb-8">
-          You&apos;re almost ready to receive gifts.
-          {referralCode && (
-            <span className="block text-violet-600 font-medium mt-1">
-              🎁 You&apos;ll get $5 when you receive your first gift!
-            </span>
-          )}
-        </p>
+    <main className="min-h-screen bg-black flex items-center justify-center px-4">
+      {/* Background glow */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,45,120,0.15) 0%, transparent 70%)",
+        }}
+      />
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
-            <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-violet-400">
-              <span className="px-3 text-gray-400 text-sm bg-gray-50 py-2.5 border-r border-gray-200">
-                giftwave.com/
+      <div className="relative w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <span className="text-3xl font-extrabold tracking-tight">
+            Spoil<span style={{ color: "#ff2d78" }}>Me</span>
+          </span>
+        </div>
+
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
+          <h1 className="text-2xl font-extrabold text-center mb-2">Set up your profile</h1>
+          <p className="text-white/40 text-center text-sm mb-8">
+            You&apos;re almost ready to start receiving gifts.
+            {referralCode && (
+              <span className="block mt-2 font-semibold" style={{ color: "#ff2d78" }}>
+                🎁 You&apos;ll get $5 when you receive your first gift!
               </span>
+            )}
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-semibold text-white/70 mb-2">Username</label>
+              <div
+                className="flex items-center rounded-xl overflow-hidden border border-white/10 focus-within:border-pink-500 transition-colors"
+                style={{ background: "rgba(255,255,255,0.05)" }}
+              >
+                <span className="px-3 text-white/30 text-sm py-3 border-r border-white/10 whitespace-nowrap">
+                  spoilme.es/
+                </span>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ""))}
+                  placeholder="yourname"
+                  required
+                  minLength={3}
+                  maxLength={30}
+                  className="flex-1 px-3 py-3 text-sm focus:outline-none bg-transparent text-white placeholder-white/20"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-white/70 mb-2">Display name</label>
               <input
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ""))}
-                placeholder="yourname"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Your Name"
                 required
-                minLength={3}
-                maxLength={30}
-                className="flex-1 px-3 py-2.5 text-sm focus:outline-none"
+                maxLength={50}
+                className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none border border-white/10 focus:border-pink-500 transition-colors bg-white/5 text-white placeholder-white/20"
               />
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Display name</label>
-            <input
-              type="text"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Your Name"
-              required
-              maxLength={50}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
-            />
-          </div>
+            <div>
+              <label className="block text-sm font-semibold text-white/70 mb-2">
+                Bio <span className="text-white/30 font-normal">(optional)</span>
+              </label>
+              <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                placeholder="Tell your fans about yourself..."
+                maxLength={160}
+                rows={3}
+                className="w-full rounded-xl px-4 py-3 text-sm resize-none focus:outline-none border border-white/10 focus:border-pink-500 transition-colors bg-white/5 text-white placeholder-white/20"
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Bio (optional)</label>
-            <textarea
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              placeholder="Tell your fans about yourself..."
-              maxLength={160}
-              rows={3}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-violet-400"
-            />
-          </div>
+            {error && (
+              <p className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-3">
+                {error}
+              </p>
+            )}
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 rounded-full font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+              style={{ background: "#ff2d78" }}
+            >
+              {loading ? "Creating profile..." : "Create my profile ✨"}
+            </button>
+          </form>
+        </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-violet-600 text-white py-3 rounded-full font-semibold hover:bg-violet-700 transition-colors disabled:opacity-50"
-          >
-            {loading ? "Creating profile..." : "Create my profile"}
-          </button>
-        </form>
+        <p className="text-center text-xs text-white/20 mt-6">
+          By continuing you agree to our Terms & Privacy Policy.
+        </p>
       </div>
     </main>
   );

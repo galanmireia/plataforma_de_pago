@@ -6,16 +6,16 @@ import "./globals.css";
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
-  title: "GiftWave — Gift your favorite creators. They keep 100%.",
+  title: "SpoilMe — Get gifted by your fans. You keep 100%.",
   description:
-    "Send gifts, cash, and digital items to creators you love. Zero commission, instant payouts, complete privacy.",
+    "The gifting platform for creators. Wishlists, cash gifts, instant payouts. Zero commission. Total privacy.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
       <html lang="en" className={`${geist.variable} h-full antialiased`}>
-        <body className="min-h-full bg-white text-gray-900">{children}</body>
+        <body className="min-h-full bg-black text-white">{children}</body>
       </html>
     </ClerkProvider>
   );
